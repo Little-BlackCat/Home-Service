@@ -91,6 +91,7 @@ function ImageInput() {
 		) {
 			console.log(`formData for upload image: ${formData}`)
 			console.log("isFormData", isFormDataValidate)
+			console.log(shouldHighlight)
 			if (newService?.pic_service.includes("HomeService") && formData?.image.name.includes(newService?.pic_service)) {
 				// กรณีแก้ไขข้อมูล และใช้รูปเดิม
 				console.log("fileList in old pic: ", formData)
