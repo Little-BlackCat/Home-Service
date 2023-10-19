@@ -15,6 +15,7 @@ const buttonVariants = cva(
         //   "bg-red-500 text-slate-50 hover:bg-red-500/90 dark:bg-red-900 dark:text-slate-50 dark:hover:bg-red-900/90",
         // outline:
         //   "border border-slate-200 bg-white hover:bg-slate-100 hover:text-slate-900 dark:border-slate-800 dark:bg-slate-950 dark:hover:bg-slate-800 dark:hover:text-slate-50",
+        outline: "",
         secondary:
           "h-11 px-6 py-2.5 rounded-lg border border-blue-600 justify-center items-center gap-2 inline-flex text-blue-600 text-base font-medium leading-normal hover:text-blue-400 hover:border-blue-400 active:text-blue-800 active:border-blue-800 disabled:bg-gray-100 disabled:text-gray-400 disabled:border-gray-400 dark:bg-slate-800 dark:text-slate-50 dark:hover:bg-slate-800/80",
         // ghost:
