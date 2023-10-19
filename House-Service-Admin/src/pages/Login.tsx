@@ -21,19 +21,7 @@ function Login() {
     setIsValid,
     setIsHaveEmail,
     isHaveEmail,
-    role, SetRole
   } = useLogin();
-
-  const selected = "rounded-xl bg-blue-600 py-1.5 px-8 text-white"
-
-  function handleClick(role: string) {
-    if (role === 'Admin') {
-      SetRole('Admin')
-    } else {
-      SetRole("Technician")
-    }
-    console.log("Role: ", role)
-  }
 
   useEffect(() => {
     setIsHaveEmail(true)
@@ -50,20 +38,6 @@ function Login() {
         <h1 className="text-[32px] font-medium text-blue-950 text-center mb-4">
           เข้าสู่ระบบ
         </h1>
-        <div className="flex justify-evenly my-6 text-lg font-semibold">
-          <h4
-            className={`duration-300 hover:rounded-xl hover:bg-blue-600 py-1.5 px-8 hover:text-white hover:cursor-pointer ${role === "Admin" && selected}`}
-            onClick={() => { handleClick('Admin') }}
-          >
-            Admin
-          </h4>
-          <h4
-            className={`duration-300 hover:rounded-xl hover:bg-blue-600 py-1.5 px-8 hover:text-white hover:cursor-pointer ${role === "Technician" && selected}`}
-            onClick={() => { handleClick('Technician') }}
-          >
-            Technician
-          </h4>
-        </div>
         <form className="text-base font-medium" onSubmit={handleSubmit}>
           <div className="relative ">
             <Label htmlFor="email" className="block">
