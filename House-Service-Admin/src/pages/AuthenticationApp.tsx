@@ -14,9 +14,6 @@ import PromotionSearch from "../pages/PromotionSearch";
 import PromotionAdd from "../pages/PromotionAdd";
 import PromotionEdit from "../pages/PromotionEdit";
 import PromotionDetail from "../pages/PromotionDetail";
-
-import EmployeeLayout from "@/components/Employee/EmployeeLayout";
-import EmployeeDetail from "./EmployeeDetail";
 import Login from "./Login";
 
 function AuthenticationApp() {
@@ -47,9 +44,6 @@ function AuthenticationApp() {
             <Route path="detail/:id" element={<PromotionDetail />} /> 
             <Route path="*" element={<NotFoundPage />} />
           </Route>
-        </Route>
-        <Route element={<EmployeeLayout />}>
-          <Route path="/employee" element={<EmployeeDetail />} />
         </Route>
         <Route path="*" element={<NotFoundPage />} />
         <Route path="/" element={<Login />} />
