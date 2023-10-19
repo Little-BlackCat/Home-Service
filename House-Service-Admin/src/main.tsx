@@ -7,7 +7,7 @@ import { ProductProvider } from "./contexts/productsContext.tsx";
 import { Toaster } from './components/ui/toaster.tsx';
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
-  // <React.StrictMode>
+  //<React.StrictMode>
     <Router>
       <ProductProvider>
         <App />
