@@ -1,0 +1,43 @@
+วิธีที่ Server นี้ถูกสร้างขึ้นมา
+1. ขั้นแรก npm init -y เพื่อสร้าง package.json
+2. ลง lib ที่ใช้ด้วย npm install เช่น express / nodemon / body-parser / cors
+3. ลง prisma ด้วยคำสั่ง npm install @prisma/client
+4. จากนั้น ใช้คำสั่ง npx prisma init เพื่อสร้างโฟลเดอร์ Prisma สำหรับใช้งาน
+(วิธีการเชื่อม Prisma กับ Supabase ให้หาอ่านใน Doc ของ https://supabase.com/partners/integrations/prisma)
+  สามารถใช้คำสั่งบน terminal เพื่อ...
+   4.1  npm start ใช้เพื่อเปิด server
+   4.2 npm run doc ใช้เพื่อเปิด Doc ขึ้นมาบน Browser
+   4.3 npm run generate ใช้เพื่อให้ prisma สร้าง doc และ dbml
+   4.4 npm run migrate ใช้เพื่อดันข้อมูลจาก schema.prisma ขึ้นไปยัง Database บน Supabase
+
+(Optional) ใช้ส่วนเสริม Prisma (https://www.prisma.io/ecosystem)
+1.ใช้ Prisma-docs-generator (https://www.npmjs.com/package/prisma-docs-generator) เพื่อสร้าง Doc ของ Prisma 
+2.ใช้ Prisma-dbml-generator (https://www.npmjs.com/package/prisma-dbml-generator) เพื่อสร้าง code diagram เพื่อนำไปใช้ใน DBdiagram (https://dbdiagram.io/home)
+
+
+วิธีที่เชื่อม Database ของ Supabase
+(Database ที่ถูกสร้างบน Supabase สามารถเข้ามาดูได้หลายวิธีแต่ให้เลือกใช้วิธีนี้เพราะง่ายสุด)
+1.เปิด PGAdmin ขึ้นมา (App ที่เราใช้เขียน SQL)
+2.คลิกขวาตรงหัวข้อ Server > Register > Server...
+3.ตรงช่องว่าง Name ตั้งอะไรก็ได้ บอกให้รู้ว่า Database นี้คืองานของเรา
+4.เปลี่ยน Tab มาที่ Connection
+
+  4.1 ตรงช่อง Host name/address ให้ใส่ข้อมูลตามที่ส่งให้ใน Discord
+  4.2 เลื่อนลงมา ตรงช่อง Password ให้ใส่ Password ที่ให้ใน Discord (ติ๊ก Save password ด้วย) แล้วกด Save
+  
+5.วิธี Query ข้อมูลจาก Server
+
+  5.1 ขยายชื่อ Server ที่สร้างไว้ แล้วขยาย Databases ตาม
+  5.2 คลิกขวาที่ postgres แล้วไปที่ Query Tool เพื่อสร้าง
+
+6.วิธีดู Table
+
+  6.1 ขยายชื่อ Server ที่สร้างไว้ แล้วขยาย Databases ตาม
+  6.2 ขยาย postgres > Schemas > public > Tables
+
+7.(Optional) ใช้ swagger-autogen ในการสร้าง API Document
+
+  7.1 ให้เข้าไปดูวิธีการติดตั้งที่ Link นี้ https://medium.com/swlh/automatic-api-documentation-in-node-js-using-swagger-dd1ab3c78284
+  7.2 ตอนใช้ให้ดูในโฟลเดอร์ routes > products.js มีตัวอย่างอยู่ หรือดูใน Doc ข้อ 7.1
+  7.3 เปิดดู API Doc ด้วยการใช้ URL ของหลังบ้าน  http://localhost:4000/api-docs
+  7.4 เราแก้ในไฟล์ package.json ในส่วนของ scripts run ให้ไป run ที่ swagger.js เลย เพื่อจะได้ generate doc และ run server ไปในตัว ตอนแรกเจอปัญหาคือ run swagger.js แล้วติด loop เพราะไฟล์ swagger-docs/swagger.json เปลี่ยนตลอด เลยต้องมี code nodemonConfig เพิ่มในไฟล์ package.json

@@ -1,0 +1,2 @@
+-- AlterTable
+ALTER TABLE "Categories" ALTER COLUMN "updateAt" SET DEFAULT CURRENT_TIMESTAMP;

@@ -1,0 +1,173 @@
+generator client {
+  provider        = "prisma-client-js"
+  previewFeatures = ["fullTextSearch"]
+}
+
+generator docs {
+  provider = "node node_modules/prisma-docs-generator"
+}
+
+generator dbml {
+  provider = "prisma-dbml-generator"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Customer_profile {
+  id         Int      @id @default(autoincrement())
+  name       String
+  phone      String   @unique
+  email      String   @unique
+  password   String
+  avatar_url String?
+  order      Orders[]
+}
+
+model Services {
+  id           Int            @id @default(autoincrement())
+  service_name String
+  category_id  Int
+  pic_service  String
+  createAt     DateTime       @default(now())
+  updateAt     DateTime       @updatedAt
+  category     Categories     @relation(fields: [category_id], references: [id], onDelete: Cascade)
+  sub_services Sub_services[]
+}
+
+model Categories {
+  id            Int        @id @default(autoincrement())
+  category_name String
+  createAt      DateTime   @default(now())
+  updateAt      DateTime   @updatedAt
+  recommend     Int?
+  services      Services[]
+}
+
+model Sub_services {
+  id               Int             @id @default(autoincrement())
+  service_id       Int
+  sub_service_name String
+  price_per_unit   Int
+  unit             String
+  service_order    Service_Order[]
+  services         Services        @relation(fields: [service_id], references: [id])
+}
+
+model Orders {
+  order_id        String           @id
+  user_id         Int
+  status_id       Int              @default(1)
+  order_detail_id Int              @unique
+  promotion_code  String?          @unique
+  created_at      DateTime         @default(now())
+  updated_at      DateTime         @updatedAt
+  stripe_id       String?
+  totalprice      Int?
+  order_detail    Order_details    @relation(fields: [order_detail_id], references: [order_detail_id])
+  promotion       Promotions?      @relation(fields: [promotion_code], references: [promotion_code])
+  status          Status           @relation(fields: [status_id], references: [status_id])
+  user            Customer_profile @relation(fields: [user_id], references: [id])
+  service_order   Service_Order[]
+}
+
+model Status {
+  status_id Int      @id @default(autoincrement())
+  status    String
+  order     Orders[]
+}
+
+model Promotions {
+  promotion_id    Int       @id @default(autoincrement())
+  promotion_code  String    @unique
+  type            String
+  quota           Int?
+  discount_amount Int
+  created_at      DateTime  @default(now())
+  expired_time    DateTime
+  use_count       Int
+  updated_at      DateTime? @updatedAt
+  order           Orders?
+}
+
+model Order_details {
+  address         String
+  details         String?
+  district        String
+  order_detail_id Int              @id @default(autoincrement())
+  province        String
+  subdistrict     String
+  working_time    DateTime
+  order_employee  Order_Employee[]
+  order           Orders?
+}
+
+model Service_Order {
+  service_order_id Int          @id @default(autoincrement())
+  order_id         String
+  sub_service_id   Int
+  amount           Int
+  order            Orders       @relation(fields: [order_id], references: [order_id])
+  sub_service      Sub_services @relation(fields: [sub_service_id], references: [id])
+}
+
+model Order_Employee {
+  order_employee_id Int           @id @default(autoincrement())
+  order_detail_id   Int
+  employee_id       Int
+  employee          Employee      @relation(fields: [employee_id], references: [employee_id])
+  order_detail      Order_details @relation(fields: [order_detail_id], references: [order_detail_id])
+}
+
+model Employee {
+  employee_id    Int              @id @default(autoincrement())
+  name           String
+  created_at     DateTime         @default(now())
+  updated_at     DateTime         @updatedAt
+  email          String?
+  order_employee Order_Employee[]
+}
+
+model thai_amphures {
+  id             Int            @id
+  name_th        String?
+  name_en        String?
+  province_id    Int
+  created_at     String?
+  updated_at     String?
+  deleted_at     String?
+  thai_provinces thai_provinces @relation(fields: [province_id], references: [id])
+  thai_tambons   thai_tambons[]
+}
+
+model thai_provinces {
+  id            Int             @id
+  name_th       String
+  name_en       String?
+  geography_id  Int?
+  created_at    String?
+  updated_at    String?
+  deleted_at    String?
+  thai_amphures thai_amphures[]
+}
+
+model thai_tambons {
+  id            Int           @id
+  zip_code      Int?
+  name_th       String?
+  name_en       String?
+  amphure_id    Int
+  created_at    String?
+  updated_at    String?
+  deleted_at    String?
+  thai_amphures thai_amphures @relation(fields: [amphure_id], references: [id])
+}
+
+model Admin {
+  id         Int      @id
+  name       String
+  email      String
+  created_at DateTime @default(now())
+}

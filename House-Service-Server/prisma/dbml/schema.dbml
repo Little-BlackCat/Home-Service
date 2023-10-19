@@ -1,0 +1,183 @@
+//// ------------------------------------------------------
+//// THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
+//// ------------------------------------------------------
+
+Table Customer_profile {
+  id Int [pk, increment]
+  name String [not null]
+  phone String [unique, not null]
+  email String [unique, not null]
+  password String [not null]
+  avatar_url String
+  order Orders [not null]
+}
+
+Table Services {
+  id Int [pk, increment]
+  service_name String [not null]
+  category_id Int [not null]
+  pic_service String [not null]
+  createAt DateTime [default: `now()`, not null]
+  updateAt DateTime [not null]
+  category Categories [not null]
+  sub_services Sub_services [not null]
+}
+
+Table Categories {
+  id Int [pk, increment]
+  category_name String [not null]
+  createAt DateTime [default: `now()`, not null]
+  updateAt DateTime [not null]
+  recommend Int
+  services Services [not null]
+}
+
+Table Sub_services {
+  id Int [pk, increment]
+  service_id Int [not null]
+  sub_service_name String [not null]
+  price_per_unit Int [not null]
+  unit String [not null]
+  service_order Service_Order [not null]
+  services Services [not null]
+}
+
+Table Orders {
+  order_id String [pk]
+  user_id Int [not null]
+  status_id Int [not null, default: 1]
+  order_detail_id Int [unique, not null]
+  promotion_code String [unique]
+  created_at DateTime [default: `now()`, not null]
+  updated_at DateTime [not null]
+  stripe_id String
+  totalprice Int
+  order_detail Order_details [not null]
+  promotion Promotions
+  status Status [not null]
+  user Customer_profile [not null]
+  service_order Service_Order [not null]
+}
+
+Table Status {
+  status_id Int [pk, increment]
+  status String [not null]
+  order Orders [not null]
+}
+
+Table Promotions {
+  promotion_id Int [pk, increment]
+  promotion_code String [unique, not null]
+  type String [not null]
+  quota Int
+  discount_amount Int [not null]
+  created_at DateTime [default: `now()`, not null]
+  expired_time DateTime [not null]
+  use_count Int [not null]
+  updated_at DateTime
+  order Orders
+}
+
+Table Order_details {
+  address String [not null]
+  details String
+  district String [not null]
+  order_detail_id Int [pk, increment]
+  province String [not null]
+  subdistrict String [not null]
+  working_time DateTime [not null]
+  order_employee Order_Employee [not null]
+  order Orders
+}
+
+Table Service_Order {
+  service_order_id Int [pk, increment]
+  order_id String [not null]
+  sub_service_id Int [not null]
+  amount Int [not null]
+  order Orders [not null]
+  sub_service Sub_services [not null]
+}
+
+Table Order_Employee {
+  order_employee_id Int [pk, increment]
+  order_detail_id Int [not null]
+  employee_id Int [not null]
+  employee Employee [not null]
+  order_detail Order_details [not null]
+}
+
+Table Employee {
+  employee_id Int [pk, increment]
+  name String [not null]
+  created_at DateTime [default: `now()`, not null]
+  updated_at DateTime [not null]
+  email String
+  order_employee Order_Employee [not null]
+}
+
+Table thai_amphures {
+  id Int [pk]
+  name_th String
+  name_en String
+  province_id Int [not null]
+  created_at String
+  updated_at String
+  deleted_at String
+  thai_provinces thai_provinces [not null]
+  thai_tambons thai_tambons [not null]
+}
+
+Table thai_provinces {
+  id Int [pk]
+  name_th String [not null]
+  name_en String
+  geography_id Int
+  created_at String
+  updated_at String
+  deleted_at String
+  thai_amphures thai_amphures [not null]
+}
+
+Table thai_tambons {
+  id Int [pk]
+  zip_code Int
+  name_th String
+  name_en String
+  amphure_id Int [not null]
+  created_at String
+  updated_at String
+  deleted_at String
+  thai_amphures thai_amphures [not null]
+}
+
+Table Admin {
+  id Int [pk]
+  name String [not null]
+  email String [not null]
+  created_at DateTime [default: `now()`, not null]
+}
+
+Ref: Services.category_id > Categories.id [delete: Cascade]
+
+Ref: Sub_services.service_id > Services.id
+
+Ref: Orders.order_detail_id - Order_details.order_detail_id
+
+Ref: Orders.promotion_code - Promotions.promotion_code
+
+Ref: Orders.status_id > Status.status_id
+
+Ref: Orders.user_id > Customer_profile.id
+
+Ref: Service_Order.order_id > Orders.order_id
+
+Ref: Service_Order.sub_service_id > Sub_services.id
+
+Ref: Order_Employee.employee_id > Employee.employee_id
+
+Ref: Order_Employee.order_detail_id > Order_details.order_detail_id
+
+Ref: thai_amphures.province_id > thai_provinces.id
+
+Ref: thai_tambons.amphure_id > thai_amphures.id

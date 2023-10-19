@@ -1,0 +1,40 @@
+{
+  "name": "house-service-server",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app.js",
+  "type": "module",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "generate": "npx prisma generate",
+    "doc": "npx prisma-docs-generator serve",
+    "start": "nodemon swagger.js",
+    "migrate": "npx prisma migrate dev"
+  },
+  "nodemonConfig": {
+    "ignore": [
+      "swagger-docs/**"
+    ]
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@prisma/client": "^5.3.1",
+    "bcrypt": "^5.1.1",
+    "body-parser": "^1.20.2",
+    "cors": "^2.8.5",
+    "dotenv": "^16.3.1",
+    "express": "^4.18.2",
+    "jsonwebtoken": "^9.0.2",
+    "nodemon": "^3.0.1",
+    "prisma": "^5.3.1",
+    "stripe": "^13.8.0",
+    "swagger-autogen": "^2.23.5",
+    "swagger-ui-express": "^5.0.0"
+  },
+  "devDependencies": {
+    "prisma-dbml-generator": "^0.10.0",
+    "prisma-docs-generator": "^0.8.0"
+  }
+}
